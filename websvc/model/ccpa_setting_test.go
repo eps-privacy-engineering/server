@@ -12,7 +12,9 @@ func TestNewCCPARights(t *testing.T) {
 	ep = append(ep, eNode)
 	re := NewRightExercise("CCPA_Sell", ep)
 	ccpa := NewCCPARights(re, nil, nil)
-	jsBytes, _ := json.MarshalIndent(ccpa, "", "\t")
+	localMap := make(map[string]*CCPARights, 0)
+	localMap["www.xfinity.com"] = ccpa
+	jsBytes, _ := json.MarshalIndent(localMap, "", "\t")
 	err := ioutil.WriteFile("tmpDB.txt", jsBytes, 0644)
 	if err != nil {
 		panic(err)
