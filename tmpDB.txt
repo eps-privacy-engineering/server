@@ -1,16 +1,44 @@
 {
-	"www.xfinity.com": {
-		"ccpa_do_not_sell": {
-			"right_type": "CCPA_Sell",
+	"www.cmu.edu": {
+		"ccpa_do_not_sell": null,
+		"ccpa_delete": {
+			"right_type": "CCPADelete",
 			"exercise_path": [
 				{
-					"text": "Do Not Sell My Personal Information",
-					"category": "href",
-					"operation_type": "click"
+					"text": "Privacy Policies",
+					"category": "input",
+					"operation_type": "click",
+					"html_id": "a7"
+				},
+				{
+					"text": "Delete my data",
+					"category": "input",
+					"operation_type": "click",
+					"html_id": "a9"
 				}
 			]
 		},
-		"ccpa_delete": null,
+		"ccpa_copy": null
+	},
+	"www.cmu2.edu": {
+		"ccpa_do_not_sell": null,
+		"ccpa_delete": {
+			"right_type": "CCPADelete",
+			"exercise_path": [
+				{
+					"text": "Privacy Policies",
+					"category": "input",
+					"operation_type": "click",
+					"html_id": "a7"
+				},
+				{
+					"text": "Delete my data",
+					"category": "input",
+					"operation_type": "click",
+					"html_id": "a9"
+				}
+			]
+		},
 		"ccpa_copy": null
 	}
 }

@@ -39,6 +39,8 @@ type ExerciseNode struct {
 	Category string `json:"category"`
 	// Op: click
 	OperationType string `json:"operation_type"`
+	// HTMLID:
+	HTMLID string `json:"html_id"`
 }
 
 func NewExerciseNode(text, category, operationType string) *ExerciseNode {

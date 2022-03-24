@@ -20,6 +20,7 @@ func InitMemoryStore() {
 
 func InitRouter() {
 	http.HandleFunc("/get_website_attr", controller.GetWebsiteAttr)
+	http.HandleFunc("/update_website_attr", controller.UpdateWebsiteAttr)
 }
 
 func main() {
