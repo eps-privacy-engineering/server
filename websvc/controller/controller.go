@@ -19,10 +19,14 @@ func GetWebsiteAttr(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	resp := new(response.SitePrivacyAttrResponse)
-	ccpa := cache.LocalMap[req.Host]
-	resp.CCPA = ccpa
+	ccpa, ok := cache.LocalMap[req.Host]
+	if !ok {
+		resp.Status = 1
+		resp.CCPA = nil
+	} else {
+		resp.CCPA = ccpa
+	}
 	respJson, _ := json.Marshal(resp)
-	fmt.Println("resp json", respJson)
 	w.Header().Set("content-type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(respJson)

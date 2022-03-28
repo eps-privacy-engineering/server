@@ -5,12 +5,14 @@
 			"right_type": "CCPADelete",
 			"exercise_path": [
 				{
+				    "page": "www.cmu.edu",
 					"text": "Privacy Policies",
 					"category": "input",
 					"operation_type": "click",
 					"html_id": "a7"
 				},
 				{
+				    "page": "www.cmu.edu/privacy_policies",
 					"text": "Delete my data",
 					"category": "input",
 					"operation_type": "click",
@@ -26,12 +28,14 @@
 			"right_type": "CCPADelete",
 			"exercise_path": [
 				{
+				    "page": "www.cmu2.edu",
 					"text": "Privacy Policies",
 					"category": "input",
 					"operation_type": "click",
 					"html_id": "a7"
 				},
 				{
+				    "page": "www.cmu2.edu/privacy_policies",
 					"text": "Delete my data",
 					"category": "input",
 					"operation_type": "click",

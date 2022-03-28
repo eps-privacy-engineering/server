@@ -33,6 +33,8 @@ func NewRightExercise(rightType string, pathList []*ExerciseNode) *RightExercise
 }
 
 type ExerciseNode struct {
+	// Page: url without params
+	Page string `json:"page"`
 	// Text: html element text
 	Text string `json:"text"`
 	// Category: html element category

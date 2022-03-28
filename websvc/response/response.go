@@ -3,7 +3,8 @@ package response
 import "server/websvc/model"
 
 type SitePrivacyAttrResponse struct {
-	CCPA *model.CCPARights `json:"ccpa"`
+	Status int               `json:"status"` // 0 = ok, 1 = failure
+	CCPA   *model.CCPARights `json:"ccpa"`
 }
 
 type UpdateWebsiteAttrResponse struct {
