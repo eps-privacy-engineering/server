@@ -15,3 +15,9 @@ type UpdateWebsiteAttrRequest struct {
 	// ExerciseDetail: Refer to the model part
 	ExerciseDetail *model.RightExercise `json:"exercise_detail"`
 }
+
+type ExtendPathNodeRequest struct {
+	Host      string              `json:"host"`
+	Node      *model.ExerciseNode `json:"node"`
+	RightType string              `json:"right_type"`
+}

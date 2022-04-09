@@ -65,3 +65,37 @@ func UpdateWebsiteAttr(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(respJson)
 }
+
+func ExtendPathNode(w http.ResponseWriter, r *http.Request) {
+	msg, _ := ioutil.ReadAll(r.Body)
+	req := new(request.ExtendPathNodeRequest)
+	err := json.Unmarshal(msg, req)
+	if err != nil {
+		return
+	}
+	resp := new(response.ExtendPathNodeResponse)
+	ccpa, ok := cache.LocalMap[req.Host]
+	if ok {
+		resp.Status = 1
+	} else {
+		ccpa = new(model.CCPARights)
+		if req.RightType == "CCPADelete" {
+			ccpa.CCPADelete.ExercisePath = append(ccpa.CCPADelete.ExercisePath, req.Node)
+			resp.Status = 0
+		} else if req.RightType == "CCPACopy" {
+			ccpa.CCPACopy.ExercisePath = append(ccpa.CCPACopy.ExercisePath, req.Node)
+			resp.Status = 0
+		} else if req.RightType == "CCPADoNotSell" {
+			ccpa.CCPADoNotSell.ExercisePath = append(ccpa.CCPADoNotSell.ExercisePath, req.Node)
+			resp.Status = 0
+		} else {
+			resp.Status = 2
+		}
+	}
+	cache.LocalMapUpdate(req.Host, ccpa)
+	respJson, _ := json.Marshal(resp)
+	fmt.Println("resp json", respJson)
+	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Write(respJson)
+}
