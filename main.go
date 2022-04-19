@@ -27,7 +27,7 @@ func InitRouter() {
 func main() {
 	InitMemoryStore()
 	InitRouter()
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":80", nil)
 	if err != nil {
 		return
 	}
