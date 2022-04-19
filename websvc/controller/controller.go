@@ -41,24 +41,43 @@ func UpdateWebsiteAttr(w http.ResponseWriter, r *http.Request) {
 	}
 	resp := new(response.UpdateWebsiteAttrResponse)
 	ccpa, ok := cache.LocalMap[req.Host]
-	if ok {
-		resp.Status = 1
-	} else {
+	if !ok {
 		ccpa = new(model.CCPARights)
-		if req.ExerciseDetail.RightType == "CCPADelete" {
+	}
+	if req.ExerciseDetail.RightType == "CCPADelete" {
+		if ccpa.CCPADelete != nil && ccpa.CCPADelete.Finish {
+			resp.Status = 1
+		} else {
 			ccpa.CCPADelete = req.ExerciseDetail
 			resp.Status = 0
-		} else if req.ExerciseDetail.RightType == "CCPACopy" {
+		}
+	} else if req.ExerciseDetail.RightType == "CCPACopy" {
+		if ccpa.CCPACopy != nil && ccpa.CCPACopy.Finish {
+			resp.Status = 1
+		} else {
 			ccpa.CCPACopy = req.ExerciseDetail
 			resp.Status = 0
-		} else if req.ExerciseDetail.RightType == "CCPADoNotSell" {
+		}
+	} else if req.ExerciseDetail.RightType == "CCPADoNotSell" {
+		if ccpa.CCPADoNotSell != nil && ccpa.CCPADoNotSell.Finish {
+			resp.Status = 1
+		} else {
 			ccpa.CCPADoNotSell = req.ExerciseDetail
 			resp.Status = 0
-		} else {
-			resp.Status = 2
 		}
+	} else if req.ExerciseDetail.RightType == "CCPAPrivacyPolicy" {
+		if ccpa.CCPAPrivacyPolicy != nil && ccpa.CCPAPrivacyPolicy.Finish {
+			resp.Status = 1
+		} else {
+			ccpa.CCPAPrivacyPolicy = req.ExerciseDetail
+			resp.Status = 0
+		}
+	} else {
+		resp.Status = 2
 	}
-	cache.LocalMapUpdate(req.Host, ccpa)
+	if resp.Status == 0 {
+		cache.LocalMapUpdate(req.Host, ccpa)
+	}
 	respJson, _ := json.Marshal(resp)
 	fmt.Println("resp json", respJson)
 	w.Header().Set("content-type", "application/json")
@@ -74,24 +93,23 @@ func ExtendPathNode(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	resp := new(response.ExtendPathNodeResponse)
-	ccpa, ok := cache.LocalMap[req.Host]
-	if ok {
-		resp.Status = 1
+	ccpa, _ := cache.LocalMap[req.Host]
+	if req.RightType == "CCPADelete" {
+		ccpa.CCPADelete.ExercisePath = append(ccpa.CCPADelete.ExercisePath, req.Node)
+		resp.Status = 0
+	} else if req.RightType == "CCPACopy" {
+		ccpa.CCPACopy.ExercisePath = append(ccpa.CCPACopy.ExercisePath, req.Node)
+		resp.Status = 0
+	} else if req.RightType == "CCPADoNotSell" {
+		ccpa.CCPADoNotSell.ExercisePath = append(ccpa.CCPADoNotSell.ExercisePath, req.Node)
+		resp.Status = 0
+	} else if req.RightType == "CCPAPrivacyPolicy" {
+		ccpa.CCPAPrivacyPolicy.ExercisePath = append(ccpa.CCPAPrivacyPolicy.ExercisePath, req.Node)
+		resp.Status = 0
 	} else {
-		ccpa = new(model.CCPARights)
-		if req.RightType == "CCPADelete" {
-			ccpa.CCPADelete.ExercisePath = append(ccpa.CCPADelete.ExercisePath, req.Node)
-			resp.Status = 0
-		} else if req.RightType == "CCPACopy" {
-			ccpa.CCPACopy.ExercisePath = append(ccpa.CCPACopy.ExercisePath, req.Node)
-			resp.Status = 0
-		} else if req.RightType == "CCPADoNotSell" {
-			ccpa.CCPADoNotSell.ExercisePath = append(ccpa.CCPADoNotSell.ExercisePath, req.Node)
-			resp.Status = 0
-		} else {
-			resp.Status = 2
-		}
+		resp.Status = 2
 	}
+
 	cache.LocalMapUpdate(req.Host, ccpa)
 	respJson, _ := json.Marshal(resp)
 	fmt.Println("resp json", respJson)
@@ -131,6 +149,13 @@ func FinishPath(w http.ResponseWriter, r *http.Request) {
 				resp.Status = 1
 			} else {
 				ccpa.CCPADoNotSell.Finish = true
+				resp.Status = 0
+			}
+		} else if req.RightType == "CCPAPrivacyPolicy" {
+			if ccpa.CCPAPrivacyPolicy == nil {
+				resp.Status = 1
+			} else {
+				ccpa.CCPAPrivacyPolicy.Finish = true
 				resp.Status = 0
 			}
 		}

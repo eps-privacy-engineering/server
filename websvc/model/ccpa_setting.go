@@ -1,9 +1,10 @@
 package model
 
 type CCPARights struct {
-	CCPADoNotSell *RightExercise `json:"ccpa_do_not_sell"`
-	CCPADelete    *RightExercise `json:"ccpa_delete"`
-	CCPACopy      *RightExercise `json:"ccpa_copy"`
+	CCPADoNotSell     *RightExercise `json:"ccpa_do_not_sell"`
+	CCPADelete        *RightExercise `json:"ccpa_delete"`
+	CCPACopy          *RightExercise `json:"ccpa_copy"`
+	CCPAPrivacyPolicy *RightExercise `json:"ccpa_privacy_policy"`
 }
 
 func NewCCPARights(dns, d, c *RightExercise) *CCPARights {
