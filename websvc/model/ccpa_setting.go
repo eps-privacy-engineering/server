@@ -17,6 +17,7 @@ func NewCCPARights(dns, d, c *RightExercise) *CCPARights {
 
 type RightExercise struct {
 	RightType    string          `json:"right_type"`
+	Finish       bool            `json:"finish"`
 	ExercisePath []*ExerciseNode `json:"exercise_path"`
 }
 

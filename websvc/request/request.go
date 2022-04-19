@@ -10,6 +10,11 @@ type GetWebsiteAttrRequest struct {
 	Host string `json:"host"`
 }
 
+type FinishPathRequest struct {
+	Host      string `json:"host"`
+	RightType string `json:"right_type"`
+}
+
 type UpdateWebsiteAttrRequest struct {
 	Host string `json:"host"`
 	// ExerciseDetail: Refer to the model part

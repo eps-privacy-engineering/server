@@ -22,12 +22,13 @@ func InitRouter() {
 	http.HandleFunc("/get_website_attr", controller.GetWebsiteAttr)
 	http.HandleFunc("/update_website_attr", controller.UpdateWebsiteAttr)
 	http.HandleFunc("/extend_path_node", controller.ExtendPathNode)
+	http.HandleFunc("/finish_path", controller.FinishPath)
 }
 
 func main() {
 	InitMemoryStore()
 	InitRouter()
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":80", nil)
 	if err != nil {
 		return
 	}
